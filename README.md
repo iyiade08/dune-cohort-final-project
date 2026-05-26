@@ -10,6 +10,16 @@ CareConnect is a web-based healthcare platform that allows:
 - Doctors to manage their schedules and availability
 - Admins to oversee clinic operations and generate reports
 
+## Push Log
+
+### Push 2 - User Model & Settings
+- Configured settings.py with installed apps
+- Installed Django REST Framework
+- Created custom User model with role field
+- Registered User model in admin
+- Ran migrations
+- Created superuser
+
 ## Tech Stack
 - Python / Django
 - Django REST Framework
