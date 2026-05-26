@@ -28,6 +28,14 @@ CareConnect is a web-based healthcare platform that allows:
 - Configured static files and core URLs
 - Applied custom CSS design system
 
+
+### Push 4 - Authentication Flow
+- Built register, login, forgot password pages
+- Custom auth forms with role selection
+- Users saving correctly to database
+- Role-based redirect after login
+- Auth CSS styling added to main.css
+
 ## Tech Stack
 - Python / Django
 - Django REST Framework

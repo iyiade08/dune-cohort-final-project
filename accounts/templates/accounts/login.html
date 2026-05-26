@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Login — CareConnect{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+  <div class="auth-container">
+
+    <div class="auth-left">
+      <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&h=900&fit=crop" alt="Healthcare"/>
+      <div class="auth-left-overlay">
+       
+        <h2>Your health journey starts here.</h2>
+        <p>Connect with verified doctors and manage your healthcare all in one place.</p>
+      </div>
+    </div>
+
+    <div class="auth-right">
+      <div class="auth-box">
+        <div class="auth-header">
+          <h1>Welcome back</h1>
+          <p>Log in to your CareConnect account</p>
+        </div>
+
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label>Username</label>
+            <div class="input-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" name="username" placeholder="Enter your username" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <div class="input-wrap">
+              <i class="fas fa-lock"></i>
+              <input type="password" name="password" placeholder="Enter your password" required/>
+            </div>
+            <a href="/accounts/forgot-password/" class="forgot-link">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn-primary btn-full">
+            Log in <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <p class="auth-switch">
+          Don't have an account? <a href="/accounts/register/">Sign up</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

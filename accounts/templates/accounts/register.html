@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}Register — CareConnect{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+  <div class="auth-container">
+
+    <div class="auth-left">
+      <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&h=900&fit=crop" alt="Healthcare"/>
+      <div class="auth-left-overlay">
+        
+        <h2>Join thousands of patients already on CareConnect.</h2>
+        <p>Book appointments, access records, and connect with doctors easily.</p>
+      </div>
+    </div>
+
+    <div class="auth-right">
+      <div class="auth-box">
+        <div class="auth-header">
+          <h1>Create account</h1>
+          <p>Sign up to get started with CareConnect</p>
+        </div>
+
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+          {% csrf_token %}
+          {% if form.errors %}
+  <div class="alert alert-error">
+    {% for field in form %}
+      {% for error in field.errors %}
+        <p>{{ field.label }}: {{ error }}</p>
+      {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+      <p>{{ error }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+          <div class="form-group">
+            <label>Username</label>
+            <div class="input-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" name="username" placeholder="Choose a username" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <div class="input-wrap">
+              <i class="fas fa-envelope"></i>
+              <input type="email" name="email" placeholder="Enter your email" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <div class="input-wrap">
+              <i class="fas fa-phone"></i>
+              <input type="text" name="phone" placeholder="Enter your phone number"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>I am a</label>
+            <div class="input-wrap">
+              <i class="fas fa-user-tag"></i>
+              <select name="role">
+                <option value="patient">Patient</option>
+                <option value="doctor">Doctor</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <div class="input-wrap">
+              <i class="fas fa-lock"></i>
+              <input type="password" name="password1" placeholder="Create a password" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <div class="input-wrap">
+              <i class="fas fa-lock"></i>
+              <input type="password" name="password2" placeholder="Confirm your password" required/>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary btn-full">
+            Create Account <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <p class="auth-switch">
+          Already have an account? <a href="/accounts/login/">Log in</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
