@@ -127,3 +127,7 @@ STATIC_URL = 'static/'
 STATIC_DIRS = [ BASE_DIR / 'static']
 
 AUTH_USER_MODEL = 'accounts.User'
+
+import os
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_URL = '/static/'

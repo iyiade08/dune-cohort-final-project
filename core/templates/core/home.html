@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% block title %}CareConnect — Quality Healthcare At Your Fingertips{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-container">
+    <div class="hero-content">
+      <div class="hero-badge"><span></span> Welcome to CareConnect</div>
+      <h1>Quality Healthcare<br/><span>At Your Fingertips</span></h1>
+      <p>CareConnect is a modern health-tech platform that connects patients with trusted doctors — book appointments, consult online, and manage your health all in one place.</p>
+      <div class="hero-actions">
+        <a href="/accounts/register/" class="btn-primary">Get Started <i class="fas fa-arrow-right"></i></a>
+        <a href="/#features" class="btn-ghost">Explore features</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-avatars">
+          <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=80&h=80&fit=crop" alt="patient"/>
+          <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=80&h=80&fit=crop" alt="patient"/>
+          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=80&h=80&fit=crop" alt="patient"/>
+        </div>
+        <div class="trust-text">
+          <div class="trust-stars">★★★★★</div>
+          <strong>Trusted by 12,000+ patients</strong>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="hero-img-wrap">
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=750&fit=crop" alt="Doctor"/>
+      </div>
+      <div class="hero-card card-reviews">
+        <div class="card-icon red"><i class="fas fa-heart"></i></div>
+        <div>
+          <div>2,500+</div>
+          <div class="card-sub">Reviews</div>
+        </div>
+      </div>
+      <div class="hero-card card-doctor">
+        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=80&h=80&fit=crop" alt="doctor" style="width:36px;height:36px;border-radius:50%;object-fit:cover;"/>
+        <div>
+          <div>Dr. Amara Osei</div>
+          <div class="trust-stars" style="font-size:11px;">★★★★★</div>
+        </div>
+      </div>
+      <div class="hero-float f1"><i class="fas fa-phone"></i></div>
+      <div class="hero-float f2"><i class="fas fa-envelope"></i></div>
+      <div class="hero-float f3"><i class="fas fa-video"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&h=750&fit=crop" alt="Doctor consulting"/>
+      </div>
+      <div class="about-content">
+        <div class="section-badge"><span></span> About CareConnect</div>
+        <h2 class="section-title">Taking care of your health doesn't have to be difficult.</h2>
+        <p class="section-sub">CareConnect is a game-changing health-tech platform that simplifies appointment booking, connects patients with verified doctors, and puts your medical history at your fingertips.</p>
+        <br/>
+        <p class="section-sub">Take control of your health and access quality care from the comfort of your own home. It's the future of healthcare, designed for Africa.</p>
+        <br/>
+        <a href="/about/" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features" id="features">
+  <div class="container">
+    <div class="section-badge"><span></span> CareConnect Features</div>
+    <h2 class="section-title">Our best services<br/>for your health.</h2>
+    <div class="features-grid">
+      <div class="features-list">
+        <div class="feature-item active" onclick="toggleFeature(this)">
+          <div class="feature-header">
+            <div class="feature-header-left">
+              <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+              <h4>Easy Appointment Booking</h4>
+            </div>
+            <div class="feature-toggle"><i class="fas fa-times"></i></div>
+          </div>
+          <div class="feature-body">Browse verified doctors, choose your preferred time slot, and confirm your appointment in under 2 minutes.</div>
+        </div>
+        <div class="feature-item" onclick="toggleFeature(this)">
+          <div class="feature-header">
+            <div class="feature-header-left">
+              <div class="feature-icon"><i class="fas fa-user-md"></i></div>
+              <h4>Verified Doctors</h4>
+            </div>
+            <div class="feature-toggle"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="feature-body">All doctors on CareConnect are verified and credentialed. Browse by speciality and read real patient reviews.</div>
+        </div>
+        <div class="feature-item" onclick="toggleFeature(this)">
+          <div class="feature-header">
+            <div class="feature-header-left">
+              <div class="feature-icon"><i class="fas fa-file-medical"></i></div>
+              <h4>Health Records</h4>
+            </div>
+            <div class="feature-toggle"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="feature-body">Access your complete medical history, prescriptions, and lab results securely from any device at any time.</div>
+        </div>
+        <div class="feature-item" onclick="toggleFeature(this)">
+          <div class="feature-header">
+            <div class="feature-header-left">
+              <div class="feature-icon"><i class="fas fa-bell"></i></div>
+              <h4>Smart Reminders</h4>
+            </div>
+            <div class="feature-toggle"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="feature-body">Never miss an appointment. CareConnect sends you timely reminders and follow-up notifications automatically.</div>
+        </div>
+        <a href="/#pricing" class="see-all">See all features <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="features-img">
+        <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?w=600&h=750&fit=crop" alt="Healthcare professional"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="section who">
+  <div class="container">
+    <div class="section-badge"><span></span> Our Users</div>
+    <h2 class="section-title">Built for everyone<br/>in healthcare.</h2>
+    <div class="who-grid">
+      <div class="who-card">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop" alt="Patient"/>
+        <div class="who-overlay">
+          <h3>Patient</h3>
+          <p>Book appointments, access your medical records, and connect with the best healthcare professionals from the comfort of your home.</p>
+        </div>
+      </div>
+      <div class="who-card">
+        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&h=800&fit=crop" alt="Doctor"/>
+        <div class="who-overlay">
+          <h3>Healthcare Provider</h3>
+          <p>Manage your schedule, consult with patients, and grow your practice with powerful tools built for modern doctors.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials">
+  <div class="container">
+    <div class="testimonials-header">
+      <div class="section-badge"><span></span> Testimonials</div>
+      <h2 class="section-title">What our patients say</h2>
+      <p class="section-sub">Real experiences from real patients across Nigeria who use CareConnect every day.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"CareConnect completely changed how I manage my family's healthcare. Booking appointments used to take hours — now it takes minutes!"</p>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100&h=100&fit=crop" alt="Testimonial"/>
+          <div>
+            <h5>Lucy Osondu</h5>
+            <span>Patient, Lagos</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"As a doctor, CareConnect has streamlined my schedule and helped me connect with more patients. The platform is intuitive and professional."</p>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop" alt="Testimonial"/>
+          <div>
+            <h5>Dr. Emeka Njoku</h5>
+            <span>Cardiologist, Abuja</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"I love how I can see all my prescriptions and appointment history in one place. It's exactly what healthcare in Africa needed."</p>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=100&h=100&fit=crop" alt="Testimonial"/>
+          <div>
+            <h5>Fatima Aliyu</h5>
+            <span>Patient, Kano</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing" id="pricing">
+  <div class="container">
+    <div class="pricing-header">
+      <div class="section-badge"><span></span> Our Plans</div>
+      <h2 class="section-title">Plans built around your care.</h2>
+      <p class="section-sub">Choose a plan that works for you. No hidden fees, cancel anytime.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Standard</div>
+        <div class="pricing-amount">₦5,000<span>/mo</span></div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check-circle"></i> 3 Free Appointments</li>
+          <li><i class="fas fa-check-circle"></i> 9 Treatments</li>
+          <li><i class="fas fa-check-circle"></i> Limited Consultant</li>
+          <li><i class="fas fa-check-circle"></i> 24/7 Support</li>
+        </ul>
+        <button class="pricing-btn">Choose Plan</button>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-name">Premium</div>
+        <div class="pricing-amount">₦15,000<span>/mo</span></div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check-circle"></i> 7 Free Appointments</li>
+          <li><i class="fas fa-check-circle"></i> 13 Treatments</li>
+          <li><i class="fas fa-check-circle"></i> Unlimited Consultant</li>
+          <li><i class="fas fa-check-circle"></i> 24/7 Support</li>
+        </ul>
+        <button class="pricing-btn">Choose Plan</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Deluxe</div>
+        <div class="pricing-amount">₦30,000<span>/mo</span></div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check-circle"></i> 15 Free Appointments</li>
+          <li><i class="fas fa-check-circle"></i> 35 Treatments</li>
+          <li><i class="fas fa-check-circle"></i> Unlimited Consultant</li>
+          <li><i class="fas fa-check-circle"></i> 24/7 Support</li>
+        </ul>
+        <button class="pricing-btn">Choose Plan</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleFeature(el) {
+  document.querySelectorAll('.feature-item').forEach(i => {
+    i.classList.remove('active');
+    i.querySelector('.feature-toggle i').className = 'fas fa-plus';
+  });
+  el.classList.add('active');
+  el.querySelector('.feature-toggle i').className = 'fas fa-times';
+}
+</script>
+{% endblock %}
