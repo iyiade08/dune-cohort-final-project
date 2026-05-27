@@ -1,0 +1,132 @@
+{% extends 'base.html' %} 
+
+
+
+
+{% block title %}My Appointments — CareConnect{%endblock %} 
+
+
+{% block content %}
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar"><i class="fas fa-user"></i></div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Patient</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/patient/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="/patient/appointments/" class="active"
+        ><i class="fas fa-calendar-check"></i> My Appointments</a
+      >
+      <a href="/patient/book/"
+        ><i class="fas fa-plus-circle"></i> Book Appointment</a
+      >
+      <a href="/accounts/logout/" class="logout"
+        ><i class="fas fa-sign-out-alt"></i> Log out</a
+      >
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-topbar">
+      <div>
+        <h1>My Appointments</h1>
+        <p>View and manage all your appointments.</p>
+      </div>
+      <a href="/patient/book/" class="btn-primary">
+        <i class="fas fa-plus"></i> Book New
+      </a>
+    </div>
+
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %} {% endif %}
+
+    <!-- UPCOMING -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3>Upcoming Appointments</h3>
+        <span class="badge-count">{{ upcoming.count }}</span>
+      </div>
+      {% if upcoming %}
+      <div class="appointments-list">
+        {% for apt in upcoming %}
+        <div class="appointment-item">
+          <div class="apt-icon purple">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <div class="apt-info">
+           <h4>Dr. {{ apt.doctor.user.get_full_name|default:apt.doctor.user.username }}</h4>
+            <span>{{ apt.doctor.get_speciality_display }}</span>
+            <div class="apt-meta">
+              <i class="fas fa-calendar"></i> {{ apt.appointment_date }}
+              <i class="fas fa-clock" style="margin-left:12px;"></i> {{ apt.start_time }}
+            </div>
+          </div>
+          <div class="apt-actions">
+            <span class="status-badge status-{{ apt.status }}"
+              >{{ apt.get_status_display }}</span
+            >
+            <a
+              href="/patient/appointments/{{ apt.id }}/cancel/"
+              onclick="return confirm('Cancel this appointment?');"
+              class="btn-cancel"
+              >Cancel</a
+            >
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <i class="fas fa-calendar-plus"></i>
+        <p>No upcoming appointments</p>
+        <a href="/patient/book/" class="btn-primary">Book Now</a>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- PAST -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3>Past Appointments</h3>
+        <span class="badge-count">{{ past.count }}</span>
+      </div>
+      {% if past %}
+      <div class="appointments-list">
+        {% for apt in past %}
+        <div class="appointment-item">
+          <div class="apt-icon gray"><i class="fas fa-history"></i></div>
+          <div class="apt-info">
+            <h4>
+              Dr. {{
+              apt.doctor.user.get_full_name|default:apt.doctor.user.username }}
+            </h4>
+            <span>{{ apt.doctor.get_speciality_display }}</span>
+            <div class="apt-meta">
+              <i class="fas fa-calendar"></i> {{ apt.appointment_date }}
+              <i class="fas fa-clock" style="margin-left: 12px"></i> {{
+              apt.start_time }}
+            </div>
+          </div>
+          <div class="apt-actions">
+            <span class="status-badge status-{{ apt.status }}"
+              >{{ apt.get_status_display }}</span
+            >
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <i class="fas fa-history"></i>
+        <p>No past appointments</p>
+      </div>
+      {% endif %}
+    </div>
+  </main>
+</div>
+{% endblock %}

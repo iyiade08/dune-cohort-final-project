@@ -1,7 +1,103 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Appointment, Notification
+from doctors.models import DoctorProfile
 
 
 @login_required
 def patient_dashboard(request):
-    return render(request, 'appointments/patient_dashboard.html')
+    appointments = Appointment.objects.filter(
+        patient=request.user,
+        status__in=['pending', 'confirmed']
+    ).order_by('appointment_date')[:5]
+    notifications = Notification.objects.filter(
+        user=request.user,
+        is_read=False
+    )[:5]
+    context = {
+        'appointments': appointments,
+        'notifications': notifications,
+        'upcoming_count': Appointment.objects.filter(patient=request.user, status__in=['pending','confirmed']).count(),
+        'completed_count': Appointment.objects.filter(patient=request.user, status='completed').count(),
+    }
+    return render(request, 'appointments/patient_dashboard.html', context)
+
+
+@login_required
+def book_appointment(request):
+    doctors = DoctorProfile.objects.filter(is_verified=True)
+    speciality = request.GET.get('speciality', '')
+    if speciality:
+        doctors = doctors.filter(speciality=speciality)
+    context = {
+        'doctors': doctors,
+        'speciality': speciality,
+        'specialities': DoctorProfile.SPECIALITIES,
+    }
+    return render(request, 'appointments/book_appointment.html', context)
+
+
+@login_required
+def doctor_detail(request, doctor_id):
+    doctor = get_object_or_404(DoctorProfile, id=doctor_id)
+    return render(request, 'appointments/doctor_detail.html', {'doctor': doctor})
+
+
+@login_required
+def confirm_booking(request, doctor_id):
+    doctor = get_object_or_404(DoctorProfile, id=doctor_id)
+    if request.method == 'POST':
+        date       = request.POST.get('date')
+        start_time = request.POST.get('start_time')
+        end_time   = request.POST.get('end_time')
+        notes      = request.POST.get('notes', '')
+        existing = Appointment.objects.filter(
+            doctor=doctor,
+            appointment_date=date,
+            start_time=start_time
+        ).exists()
+        if existing:
+            messages.error(request, 'That slot is already booked. Please choose another time.')
+            return redirect('doctor_detail', doctor_id=doctor_id)
+        appointment = Appointment.objects.create(
+            patient=request.user,
+            doctor=doctor,
+            appointment_date=date,
+            start_time=start_time,
+            end_time=end_time,
+            notes=notes,
+            status='pending'
+        )
+        Notification.objects.create(
+            user=request.user,
+            message=f'Your appointment with Dr. {doctor.user.get_full_name() or doctor.user.username} on {date} at {start_time} has been booked!'
+        )
+        messages.success(request, 'Appointment booked successfully!')
+        return redirect('my_appointments')
+    return redirect('book_appointment')
+
+
+@login_required
+def my_appointments(request):
+    upcoming = Appointment.objects.filter(
+        patient=request.user,
+        status__in=['pending', 'confirmed']
+    ).order_by('appointment_date')
+    past = Appointment.objects.filter(
+        patient=request.user,
+        status__in=['completed', 'cancelled']
+    ).order_by('-appointment_date')
+    return render(request, 'appointments/my_appointments.html', {
+        'upcoming': upcoming,
+        'past': past
+    })
+
+
+@login_required
+def cancel_appointment(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id, patient=request.user)
+    appointment.status = 'cancelled'
+    appointment.save()
+    messages.success(request, 'Appointment cancelled successfully.')
+    return redirect('my_appointments')

@@ -49,6 +49,13 @@ CareConnect is a web-based healthcare platform that allows:
 - Quick actions and notifications sections
 - Role-based redirects working
 
+### Push 6 - Appointment Booking System
+- Built Doctor and Appointment models
+- Built booking flow - browse doctors, book, confirm
+- My appointments page with upcoming and past
+- Cancel appointment functionality
+- Notifications on booking
+
 ## Tech Stack
 
 - Python / Django
