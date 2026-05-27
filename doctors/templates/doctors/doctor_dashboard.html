@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% block title %}Doctor Dashboard — CareConnect{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" style="background:#3B82F6;">
+        <i class="fas fa-user-md"></i>
+      </div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Doctor</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/doctor/dashboard/" class="active">
+        <i class="fas fa-home"></i> Dashboard
+      </a>
+      <a href="/doctor/appointments/">
+        <i class="fas fa-calendar-check"></i> Appointments
+      </a>
+      <a href="/doctor/availability/">
+        <i class="fas fa-clock"></i> Availability
+      </a>
+      <a href="/doctor/patients/">
+        <i class="fas fa-users"></i> My Patients
+      </a>
+      <a href="/doctor/profile/">
+        <i class="fas fa-user-cog"></i> Profile Settings
+      </a>
+      <a href="/accounts/logout/" class="logout">
+        <i class="fas fa-sign-out-alt"></i> Log out
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-main">
+
+    <!-- TOP BAR -->
+    <div class="dashboard-topbar">
+      <div>
+        <h1>Good day, Dr. {{ user.get_full_name|default:user.username }} 👋</h1>
+        <p>Here's your schedule and patient overview for today.</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="notif-btn"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
+        <a href="/doctor/availability/" class="btn-primary">
+          <i class="fas fa-clock"></i> Set Availability
+        </a>
+      </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-icon purple"><i class="fas fa-calendar-check"></i></div>
+        <div class="stat-info">
+          <span>Today's</span>
+          <h3>0</h3>
+          <p>Appointments</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+        <div class="stat-info">
+          <span>Total</span>
+          <h3>0</h3>
+          <p>Patients</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+        <div class="stat-info">
+          <span>Completed</span>
+          <h3>0</h3>
+          <p>Consultations</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><i class="fas fa-clock"></i></div>
+        <div class="stat-info">
+          <span>Pending</span>
+          <h3>0</h3>
+          <p>Appointments</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT ROW -->
+    <div class="dashboard-row">
+
+      <!-- TODAY'S APPOINTMENTS -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h3>Today's Appointments</h3>
+          <a href="/doctor/appointments/" class="card-link">View all</a>
+        </div>
+        <div class="empty-state">
+          <i class="fas fa-calendar-plus"></i>
+          <p>No appointments today</p>
+          <a href="/doctor/availability/" class="btn-primary">Set Availability</a>
+        </div>
+      </div>
+
+      <!-- QUICK ACTIONS -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h3>Quick Actions</h3>
+        </div>
+        <div class="quick-actions">
+          <a href="/doctor/appointments/" class="quick-action">
+            <div class="qa-icon purple"><i class="fas fa-calendar-check"></i></div>
+            <span>Appointments</span>
+          </a>
+          <a href="/doctor/availability/" class="quick-action">
+            <div class="qa-icon blue"><i class="fas fa-clock"></i></div>
+            <span>Availability</span>
+          </a>
+          <a href="/doctor/patients/" class="quick-action">
+            <div class="qa-icon green"><i class="fas fa-users"></i></div>
+            <span>My Patients</span>
+          </a>
+          <a href="/doctor/profile/" class="quick-action">
+            <div class="qa-icon amber"><i class="fas fa-user-cog"></i></div>
+            <span>Profile</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3>Notifications</h3>
+        <span class="badge-count">0</span>
+      </div>
+      <div class="empty-state">
+        <i class="fas fa-bell-slash"></i>
+        <p>No new notifications</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+{% endblock %}

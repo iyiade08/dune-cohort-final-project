@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% block title %}Patient Dashboard — CareConnect{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Patient</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/patient/dashboard/" class="active">
+        <i class="fas fa-home"></i> Dashboard
+      </a>
+      <a href="/patient/appointments/">
+        <i class="fas fa-calendar-check"></i> My Appointments
+      </a>
+      <a href="/patient/book/">
+        <i class="fas fa-plus-circle"></i> Book Appointment
+      </a>
+      <a href="/patient/prescriptions/">
+        <i class="fas fa-file-medical"></i> Prescriptions
+      </a>
+      <a href="/patient/profile/">
+        <i class="fas fa-user-cog"></i> Profile Settings
+      </a>
+      <a href="/accounts/logout/" class="logout">
+        <i class="fas fa-sign-out-alt"></i> Log out
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-main">
+
+    <!-- TOP BAR -->
+    <div class="dashboard-topbar">
+      <div>
+        <h1>Good day, {{ user.get_full_name|default:user.username }} 👋</h1>
+        <p>Here's what's happening with your health today.</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="notif-btn"><i class="fas fa-bell"></i><span class="notif-dot"></span></button>
+        <a href="/patient/book/" class="btn-primary">
+          <i class="fas fa-plus"></i> Book Appointment
+        </a>
+      </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-icon purple"><i class="fas fa-calendar-check"></i></div>
+        <div class="stat-info">
+          <span>Upcoming</span>
+          <h3>0</h3>
+          <p>Appointments</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="fas fa-user-md"></i></div>
+        <div class="stat-info">
+          <span>Consulted</span>
+          <h3>0</h3>
+          <p>Doctors</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green"><i class="fas fa-file-medical"></i></div>
+        <div class="stat-info">
+          <span>Active</span>
+          <h3>0</h3>
+          <p>Prescriptions</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><i class="fas fa-history"></i></div>
+        <div class="stat-info">
+          <span>Completed</span>
+          <h3>0</h3>
+          <p>Consultations</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT ROW -->
+    <div class="dashboard-row">
+
+      <!-- UPCOMING APPOINTMENTS -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h3>Upcoming Appointments</h3>
+          <a href="/patient/appointments/" class="card-link">View all</a>
+        </div>
+        <div class="empty-state">
+          <i class="fas fa-calendar-plus"></i>
+          <p>No upcoming appointments</p>
+          <a href="/patient/book/" class="btn-primary">Book Now</a>
+        </div>
+      </div>
+
+      <!-- QUICK ACTIONS -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h3>Quick Actions</h3>
+        </div>
+        <div class="quick-actions">
+          <a href="/patient/book/" class="quick-action">
+            <div class="qa-icon purple"><i class="fas fa-calendar-plus"></i></div>
+            <span>Book Appointment</span>
+          </a>
+          <a href="/patient/prescriptions/" class="quick-action">
+            <div class="qa-icon blue"><i class="fas fa-file-medical"></i></div>
+            <span>Prescriptions</span>
+          </a>
+          <a href="/patient/profile/" class="quick-action">
+            <div class="qa-icon green"><i class="fas fa-user-cog"></i></div>
+            <span>Edit Profile</span>
+          </a>
+          <a href="/accounts/logout/" class="quick-action">
+            <div class="qa-icon amber"><i class="fas fa-sign-out-alt"></i></div>
+            <span>Log out</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3>Notifications</h3>
+        <span class="badge-count">0</span>
+      </div>
+      <div class="empty-state">
+        <i class="fas fa-bell-slash"></i>
+        <p>No new notifications</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+{% endblock %}
