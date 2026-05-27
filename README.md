@@ -56,6 +56,14 @@ CareConnect is a web-based healthcare platform that allows:
 - Cancel appointment functionality
 - Notifications on booking
 
+
+### Push 7 - Admin Dashboard & Reports
+- Built admin dashboard with clinic stats
+- Built all appointments view with filter
+- Built user management page
+- Built daily report with date filter
+- Role-based access control for admin
+
 ## Tech Stack
 
 - Python / Django

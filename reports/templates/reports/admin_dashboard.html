@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard — CareConnect{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" style="background:#EF4444;">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Admin</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin-panel/dashboard/" class="active">
+        <i class="fas fa-home"></i> Dashboard
+      </a>
+      <a href="/admin-panel/appointments/">
+        <i class="fas fa-calendar-check"></i> All Appointments
+      </a>
+      <a href="/admin-panel/users/">
+        <i class="fas fa-users"></i> User Management
+      </a>
+      <a href="/admin-panel/reports/">
+        <i class="fas fa-chart-bar"></i> Daily Reports
+      </a>
+      <a href="/admin/" >
+        <i class="fas fa-cog"></i> Django Admin
+      </a>
+      <a href="/accounts/logout/" class="logout">
+        <i class="fas fa-sign-out-alt"></i> Log out
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dashboard-main">
+    <div class="dashboard-topbar">
+      <div>
+        <h1>Admin Dashboard 👋</h1>
+        <p>Welcome back! Here's your clinic overview.</p>
+      </div>
+      <div class="topbar-actions">
+        <a href="/admin-panel/reports/" class="btn-primary">
+          <i class="fas fa-chart-bar"></i> Generate Report
+        </a>
+      </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-icon purple"><i class="fas fa-users"></i></div>
+        <div class="stat-info">
+          <span>Total</span>
+          <h3>{{ total_patients }}</h3>
+          <p>Patients</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="fas fa-user-md"></i></div>
+        <div class="stat-info">
+          <span>Total</span>
+          <h3>{{ total_doctors }}</h3>
+          <p>Doctors</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green"><i class="fas fa-calendar-check"></i></div>
+        <div class="stat-info">
+          <span>Today's</span>
+          <h3>{{ today_appointments }}</h3>
+          <p>Appointments</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><i class="fas fa-clock"></i></div>
+        <div class="stat-info">
+          <span>Pending</span>
+          <h3>{{ pending }}</h3>
+          <p>Appointments</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECENT APPOINTMENTS -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3>Recent Appointments</h3>
+        <a href="/admin-panel/appointments/" class="card-link">View all</a>
+      </div>
+      {% if recent_appointments %}
+        <div class="appointments-list">
+          {% for apt in recent_appointments %}
+            <div class="appointment-item">
+              <div class="apt-icon purple"><i class="fas fa-calendar-check"></i></div>
+              <div class="apt-info">
+                <h4>{{ apt.patient.username }} → Dr. {{ apt.doctor.user.get_full_name|default:apt.doctor.user.username }}</h4>
+                <span>{{ apt.doctor.get_speciality_display }}</span>
+                <div class="apt-meta">
+                  <i class="fas fa-calendar"></i> {{ apt.appointment_date }}
+                  <i class="fas fa-clock" style="margin-left:12px;"></i> {{ apt.start_time }}
+                </div>
+              </div>
+              <div class="apt-actions">
+                <span class="status-badge status-{{ apt.status }}">{{ apt.get_status_display }}</span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-calendar-plus"></i>
+          <p>No appointments yet</p>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="dashboard-card">
+      <div class="card-header"><h3>Quick Actions</h3></div>
+      <div class="quick-actions">
+        <a href="/admin-panel/users/" class="quick-action">
+          <div class="qa-icon purple"><i class="fas fa-users"></i></div>
+          <span>Manage Users</span>
+        </a>
+        <a href="/admin-panel/appointments/" class="quick-action">
+          <div class="qa-icon blue"><i class="fas fa-calendar-check"></i></div>
+          <span>Appointments</span>
+        </a>
+        <a href="/admin-panel/reports/" class="quick-action">
+          <div class="qa-icon green"><i class="fas fa-chart-bar"></i></div>
+          <span>Daily Report</span>
+        </a>
+        <a href="/admin/" class="quick-action">
+          <div class="qa-icon amber"><i class="fas fa-cog"></i></div>
+          <span>Django Admin</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+{% endblock %}

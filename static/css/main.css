@@ -1721,3 +1721,28 @@ img {
 .btn-cancel:hover {
   background: #fee2e2;
 }
+/* ── USER TABLE ──────────────────────────────── */
+.users-table { width: 100%; }
+.table-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 100px;
+  padding: 10px 16px;
+  background: var(--gray-light);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 100px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--dark);
+  align-items: center;
+  transition: background 0.2s;
+}
+.table-row:hover { background: var(--bg); }
+.table-row i { color: var(--purple); margin-right: 6px; }

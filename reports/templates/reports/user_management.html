@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}User Management — CareConnect{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" style="background:#EF4444;">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Admin</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="/admin-panel/appointments/"><i class="fas fa-calendar-check"></i> All Appointments</a>
+      <a href="/admin-panel/users/" class="active"><i class="fas fa-users"></i> User Management</a>
+      <a href="/admin-panel/reports/"><i class="fas fa-chart-bar"></i> Daily Reports</a>
+      <a href="/admin/"><i class="fas fa-cog"></i> Django Admin</a>
+      <a href="/accounts/logout/" class="logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-topbar">
+      <div>
+        <h1>User Management</h1>
+        <p>Manage all patients and doctors on CareConnect.</p>
+      </div>
+    </div>
+
+    <!-- PATIENTS -->
+    <div class="dashboard-card" style="margin-bottom:24px;">
+      <div class="card-header">
+        <h3>Patients</h3>
+        <span class="badge-count">{{ patients.count }}</span>
+      </div>
+      {% if patients %}
+        <div class="users-table">
+          <div class="table-header">
+            <span>Username</span>
+            <span>Email</span>
+            <span>Phone</span>
+            <span>Status</span>
+          </div>
+          {% for patient in patients %}
+            <div class="table-row">
+              <span><i class="fas fa-user"></i> {{ patient.username }}</span>
+              <span>{{ patient.email|default:"—" }}</span>
+              <span>{{ patient.phone|default:"—" }}</span>
+              <span>
+                {% if patient.is_active %}
+                  <span class="status-badge status-confirmed">Active</span>
+                {% else %}
+                  <span class="status-badge status-cancelled">Inactive</span>
+                {% endif %}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-users"></i>
+          <p>No patients registered yet</p>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- DOCTORS -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3>Doctors</h3>
+        <span class="badge-count">{{ doctors.count }}</span>
+      </div>
+      {% if doctors %}
+        <div class="users-table">
+          <div class="table-header">
+            <span>Username</span>
+            <span>Email</span>
+            <span>Phone</span>
+            <span>Status</span>
+          </div>
+          {% for doctor in doctors %}
+            <div class="table-row">
+              <span><i class="fas fa-user-md"></i> {{ doctor.username }}</span>
+              <span>{{ doctor.email|default:"—" }}</span>
+              <span>{{ doctor.phone|default:"—" }}</span>
+              <span>
+                {% if doctor.is_active %}
+                  <span class="status-badge status-confirmed">Active</span>
+                {% else %}
+                  <span class="status-badge status-cancelled">Inactive</span>
+                {% endif %}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-user-md"></i>
+          <p>No doctors registered yet</p>
+        </div>
+      {% endif %}
+    </div>
+
+  </main>
+</div>
+{% endblock %}

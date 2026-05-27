@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block title %}Daily Report — CareConnect{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" style="background:#EF4444;">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Admin</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin-panel/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="/admin-panel/appointments/"><i class="fas fa-calendar-check"></i> All Appointments</a>
+      <a href="/admin-panel/users/"><i class="fas fa-users"></i> User Management</a>
+      <a href="/admin-panel/reports/" class="active"><i class="fas fa-chart-bar"></i> Daily Reports</a>
+      <a href="/admin/"><i class="fas fa-cog"></i> Django Admin</a>
+      <a href="/accounts/logout/" class="logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-topbar">
+      <div>
+        <h1>Daily Report</h1>
+        <p>Appointment summary for {{ date }}</p>
+      </div>
+    </div>
+
+    <!-- DATE FILTER -->
+    <div class="dashboard-card" style="margin-bottom:24px;">
+      <form method="GET" class="filter-form">
+        <div class="filter-row">
+          <div class="input-wrap" style="flex:1;">
+            <i class="fas fa-calendar"></i>
+            <input type="date" name="date" value="{{ date }}"/>
+          </div>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-search"></i> Generate Report
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- REPORT STATS -->
+    <div class="stat-grid" style="margin-bottom:24px;">
+      <div class="stat-card">
+        <div class="stat-icon purple"><i class="fas fa-calendar-check"></i></div>
+        <div class="stat-info">
+          <span>Total</span>
+          <h3>{{ total }}</h3>
+          <p>Appointments</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><i class="fas fa-clock"></i></div>
+        <div class="stat-info">
+          <span>Pending</span>
+          <h3>{{ pending }}</h3>
+          <p>Appointments</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+        <div class="stat-info">
+          <span>Completed</span>
+          <h3>{{ completed }}</h3>
+          <p>Appointments</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="fas fa-times-circle"></i></div>
+        <div class="stat-info">
+          <span>Cancelled</span>
+          <h3>{{ cancelled }}</h3>
+          <p>Appointments</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPOINTMENTS -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3>Appointments for {{ date }}</h3>
+        <span class="badge-count">{{ total }}</span>
+      </div>
+      {% if appointments %}
+        <div class="appointments-list">
+          {% for apt in appointments %}
+            <div class="appointment-item">
+              <div class="apt-icon purple"><i class="fas fa-calendar-check"></i></div>
+              <div class="apt-info">
+                <h4>{{ apt.patient.username }} → Dr. {{ apt.doctor.user.get_full_name|default:apt.doctor.user.username }}</h4>
+                <span>{{ apt.doctor.get_speciality_display }}</span>
+                <div class="apt-meta">
+                  <i class="fas fa-clock"></i> {{ apt.start_time }} — {{ apt.end_time }}
+                  {% if apt.notes %} • {{ apt.notes }}{% endif %}
+                </div>
+              </div>
+              <div class="apt-actions">
+                <span class="status-badge status-{{ apt.status }}">{{ apt.get_status_display }}</span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-calendar-times"></i>
+          <p>No appointments for this date</p>
+        </div>
+      {% endif %}
+    </div>
+
+  </main>
+</div>
+{% endblock %}
