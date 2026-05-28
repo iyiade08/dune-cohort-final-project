@@ -64,6 +64,10 @@ CareConnect is a web-based healthcare platform that allows:
 - Built daily report with date filter
 - Role-based access control for admin
 
+
+## Live URL
+Coming soon — deploying to Render
+
 ## Tech Stack
 
 - Python / Django

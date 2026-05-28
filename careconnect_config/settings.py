@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'appointments',
     'reports',
     'rest_framework',
+'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,11 @@ AUTH_USER_MODEL = 'accounts.User'
 import os
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_URL = '/static/'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}

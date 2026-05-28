@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}About — CareConnect{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section style="background:linear-gradient(135deg,#F0F1FF 0%,#E8F4FD 100%);padding:120px 0 80px;">
+  <div class="container" style="text-align:center;">
+    <div class="section-badge" style="margin:0 auto 16px;"><span></span> About CareConnect</div>
+    <h1 class="section-title">We are on a mission to make<br/>healthcare accessible to all</h1>
+    <p class="section-sub" style="margin:0 auto;">CareConnect was built to solve the real problem of accessing quality healthcare in Africa — long queues, no-shows, and poor record-keeping. We built a smarter way.</p>
+  </div>
+</section>
+
+<!-- ABOUT CONTENT -->
+<section class="section about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&h=750&fit=crop" alt="About CareConnect"/>
+      </div>
+      <div class="about-content">
+        <div class="section-badge"><span></span> Our Story</div>
+        <h2 class="section-title">Built for Africa's healthcare future</h2>
+        <p class="section-sub">CareConnect started with a simple observation — booking a doctor's appointment in most African cities still involves phone calls, long waits, and paper records that get lost.</p>
+        <br/>
+        <p class="section-sub">We built CareConnect to change that. A platform where patients can find verified doctors, book appointments in minutes, and manage their health history — all in one place.</p>
+        <br/>
+        <p class="section-sub">For doctors, we provide tools to manage their schedules, consult with patients efficiently, and grow their practice. For clinic admins, we provide full oversight and reporting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section" style="background:var(--bg);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;">
+      <div class="section-badge" style="margin:0 auto 16px;"><span></span> Our Values</div>
+      <h2 class="section-title">What we stand for</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+      <div class="dashboard-card" style="text-align:center;padding:40px 24px;">
+        <div class="stat-icon purple" style="margin:0 auto 16px;width:60px;height:60px;font-size:24px;">
+          <i class="fas fa-heart"></i>
+        </div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:12px;">Patient First</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">Every decision we make starts with the patient. We build tools that make healthcare easier, faster, and less stressful.</p>
+      </div>
+      <div class="dashboard-card" style="text-align:center;padding:40px 24px;">
+        <div class="stat-icon blue" style="margin:0 auto 16px;width:60px;height:60px;font-size:24px;">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:12px;">Trust & Safety</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">All doctors on CareConnect are verified. Patient data is secure, private, and never shared without consent.</p>
+      </div>
+      <div class="dashboard-card" style="text-align:center;padding:40px 24px;">
+        <div class="stat-icon green" style="margin:0 auto 16px;width:60px;height:60px;font-size:24px;">
+          <i class="fas fa-globe-africa"></i>
+        </div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:12px;">Built for Africa</h3>
+        <p style="font-size:14px;color:var(--gray);line-height:1.7;">We understand the unique challenges of healthcare in Africa and build solutions that work in our context.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" style="background:var(--white);text-align:center;">
+  <div class="container">
+    <h2 class="section-title">Ready to take control of your health?</h2>
+    <p class="section-sub" style="margin:0 auto 32px;">Join thousands of patients already using CareConnect.</p>
+    <a href="/accounts/register/" class="btn-primary" style="font-size:16px;padding:16px 40px;">
+      Get Started <i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+</section>
+
+{% endblock %}
