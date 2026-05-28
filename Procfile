@@ -1,0 +1,1 @@
+web: gunicorn careconnect_config.wsgi:application

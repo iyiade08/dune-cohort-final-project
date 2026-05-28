@@ -65,6 +65,19 @@ CareConnect is a web-based healthcare platform that allows:
 - Role-based access control for admin
 
 
+### Push 8 - REST API, About, Contact & Final Polish
+- Built REST API with 5 endpoints
+- Added token authentication
+- Built About and Contact pages
+- Filled api_docs.md
+- Project complete
+
+### Push 9 - Production settings and deployment prep
+- Cleaned up settings.py
+- Added Whitenoise for static files
+- Added Gunicorn for production server
+- Ready for Render deployment
+
 ## Live URL
 Coming soon — deploying to Render
 
