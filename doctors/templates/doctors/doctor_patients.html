@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}My Patients — CareConnect{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" style="background:#3B82F6;">
+        <i class="fas fa-user-md"></i>
+      </div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Doctor</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/doctor/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="/doctor/appointments/"><i class="fas fa-calendar-check"></i> Appointments</a>
+      <a href="/doctor/availability/"><i class="fas fa-clock"></i> Availability</a>
+      <a href="/doctor/patients/" class="active"><i class="fas fa-users"></i> My Patients</a>
+      <a href="/accounts/logout/" class="logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-topbar">
+      <div>
+        <h1>My Patients</h1>
+        <p>Patients you have consulted with.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3>Patient List</h3>
+        <span class="badge-count">{{ patients.count }}</span>
+      </div>
+      {% if patients %}
+        <div class="users-table">
+          <div class="table-header">
+            <span>Username</span>
+            <span>Email</span>
+            <span>Phone</span>
+          </div>
+          {% for patient in patients %}
+            <div class="table-row">
+              <span><i class="fas fa-user"></i> {{ patient.patient__username }}</span>
+              <span>{{ patient.patient__email|default:"—" }}</span>
+              <span>{{ patient.patient__phone|default:"—" }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-users"></i>
+          <p>No patients yet</p>
+        </div>
+      {% endif %}
+    </div>
+  </main>
+</div>
+{% endblock %}

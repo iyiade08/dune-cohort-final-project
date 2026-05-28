@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}My Appointments — CareConnect{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" style="background:#3B82F6;">
+        <i class="fas fa-user-md"></i>
+      </div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Doctor</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/doctor/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="/doctor/appointments/" class="active"><i class="fas fa-calendar-check"></i> Appointments</a>
+      <a href="/doctor/availability/"><i class="fas fa-clock"></i> Availability</a>
+      <a href="/doctor/patients/"><i class="fas fa-users"></i> My Patients</a>
+      <a href="/accounts/logout/" class="logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-topbar">
+      <div>
+        <h1>My Appointments</h1>
+        <p>View and manage all your patient appointments.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3>All Appointments</h3>
+        <span class="badge-count">{{ appointments.count }}</span>
+      </div>
+      {% if appointments %}
+        <div class="appointments-list">
+          {% for apt in appointments %}
+            <div class="appointment-item">
+              <div class="apt-icon purple"><i class="fas fa-calendar-check"></i></div>
+              <div class="apt-info">
+                <h4>{{ apt.patient.username }}</h4>
+                <span>{{ apt.doctor.get_speciality_display }}</span>
+                <div class="apt-meta">
+                  <i class="fas fa-calendar"></i> {{ apt.appointment_date }}
+                  <i class="fas fa-clock" style="margin-left:12px;"></i> {{ apt.start_time }}
+                  {% if apt.notes %} • {{ apt.notes }}{% endif %}
+                </div>
+              </div>
+              <div class="apt-actions">
+                <span class="status-badge status-{{ apt.status }}">{{ apt.get_status_display }}</span>
+                {% if apt.status == 'pending' or apt.status == 'confirmed' %}
+                  <form method="POST" action="/doctor/appointments/{{ apt.id }}/complete/">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-primary" style="font-size:12px;padding:6px 14px;">
+                      Mark Done
+                    </button>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-calendar-plus"></i>
+          <p>No appointments yet</p>
+        </div>
+      {% endif %}
+    </div>
+  </main>
+</div>
+{% endblock %}

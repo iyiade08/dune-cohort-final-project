@@ -78,6 +78,14 @@ CareConnect is a web-based healthcare platform that allows:
 - Added Gunicorn for production server
 - Ready for Render deployment
 
+
+### Push 10 - Doctor views and templates complete
+- Built doctor appointments page
+- Built doctor availability management
+- Built doctor patients page
+- Complete appointment mark as done feature
+
+
 ## Live URL
 Coming soon — deploying to Render
 
