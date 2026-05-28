@@ -101,3 +101,24 @@ def cancel_appointment(request, appointment_id):
     appointment.save()
     messages.success(request, 'Appointment cancelled successfully.')
     return redirect('my_appointments')
+
+
+
+@login_required
+def prescriptions(request):
+    return render(request, 'appointments/prescriptions.html')
+
+
+@login_required
+def patient_profile(request):
+    if request.method == 'POST':
+        user = request.user
+        user.first_name = request.POST.get('first_name', '')
+        user.last_name  = request.POST.get('last_name', '')
+        user.email      = request.POST.get('email', '')
+        user.phone      = request.POST.get('phone', '')
+        user.save()
+        from django.contrib import messages
+        messages.success(request, 'Profile updated successfully!')
+        return redirect('/patient/profile/')
+    return render(request, 'appointments/patient_profile.html')

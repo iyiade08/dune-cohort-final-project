@@ -10,6 +10,8 @@ urlpatterns = [
     path('book/<int:doctor_id>/confirm/', views.confirm_booking, name='confirm_booking'),
     path('appointments/', views.my_appointments, name='my_appointments'),
     path('appointments/<int:appointment_id>/cancel/', views.cancel_appointment, name='cancel_appointment'),
+    path('prescriptions/', views.prescriptions, name='prescriptions'),
+    path('profile/', views.patient_profile, name='patient_profile'),
 
     # REST API endpoints
     path('api/doctors/', api_views.doctor_list_api, name='api_doctor_list'),

@@ -44,6 +44,6 @@ def redirect_by_role(user):
     if user.role == 'doctor':
         return redirect('/doctor/dashboard/')
     elif user.role == 'admin':
-        return redirect('/admin-panel/')
+        return redirect('/admin-panel/dashboard/')
     else:
-        return redirect('/')
+        return redirect('/patient/dashboard/')

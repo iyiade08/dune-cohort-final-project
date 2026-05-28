@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block title %}Profile Settings — CareConnect{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar"><i class="fas fa-user"></i></div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Patient</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/patient/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="/patient/appointments/"><i class="fas fa-calendar-check"></i> My Appointments</a>
+      <a href="/patient/book/"><i class="fas fa-plus-circle"></i> Book Appointment</a>
+      <a href="/patient/prescriptions/"><i class="fas fa-file-medical"></i> Prescriptions</a>
+      <a href="/patient/profile/" class="active"><i class="fas fa-user-cog"></i> Profile Settings</a>
+      <a href="/accounts/logout/" class="logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-topbar">
+      <div>
+        <h1>Profile Settings</h1>
+        <p>Update your personal information.</p>
+      </div>
+    </div>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="dashboard-row">
+
+      <!-- PROFILE CARD -->
+      <div class="dashboard-card" style="text-align:center;padding:40px 24px;">
+        <div class="doctor-avatar-lg" style="margin:0 auto 16px;">
+          <i class="fas fa-user"></i>
+        </div>
+        <h3 style="font-size:20px;font-weight:700;">{{ user.get_full_name|default:user.username }}</h3>
+        <span class="doctor-speciality">{{ user.role|title }}</span>
+        <div style="margin-top:20px;text-align:left;">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--gray);">
+            <i class="fas fa-envelope" style="color:var(--purple);width:16px;"></i>
+            {{ user.email|default:"Not set" }}
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--gray);">
+            <i class="fas fa-phone" style="color:var(--purple);width:16px;"></i>
+            {{ user.phone|default:"Not set" }}
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;font-size:13px;color:var(--gray);">
+            <i class="fas fa-user-tag" style="color:var(--purple);width:16px;"></i>
+            {{ user.role|title }}
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT FORM -->
+      <div class="dashboard-card">
+        <div class="card-header"><h3>Edit Profile</h3></div>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label>First Name</label>
+            <div class="input-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="Enter first name"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <div class="input-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="Enter last name"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <div class="input-wrap">
+              <i class="fas fa-envelope"></i>
+              <input type="email" name="email" value="{{ user.email }}" placeholder="Enter email"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <div class="input-wrap">
+              <i class="fas fa-phone"></i>
+              <input type="text" name="phone" value="{{ user.phone }}" placeholder="Enter phone number"/>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary btn-full">
+            Save Changes <i class="fas fa-check"></i>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+</div>
+{% endblock %}

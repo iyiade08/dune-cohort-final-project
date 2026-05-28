@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Prescriptions — CareConnect{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar"><i class="fas fa-user"></i></div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Patient</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/patient/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="/patient/appointments/"><i class="fas fa-calendar-check"></i> My Appointments</a>
+      <a href="/patient/book/"><i class="fas fa-plus-circle"></i> Book Appointment</a>
+      <a href="/patient/prescriptions/" class="active"><i class="fas fa-file-medical"></i> Prescriptions</a>
+      <a href="/patient/profile/"><i class="fas fa-user-cog"></i> Profile Settings</a>
+      <a href="/accounts/logout/" class="logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-topbar">
+      <div>
+        <h1>My Prescriptions</h1>
+        <p>View all your prescriptions from doctors.</p>
+      </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stat-grid" style="margin-bottom:24px;">
+      <div class="stat-card">
+        <div class="stat-icon purple"><i class="fas fa-file-medical"></i></div>
+        <div class="stat-info">
+          <span>Total</span>
+          <h3>0</h3>
+          <p>Prescriptions</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+        <div class="stat-info">
+          <span>Active</span>
+          <h3>0</h3>
+          <p>Prescriptions</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><i class="fas fa-clock"></i></div>
+        <div class="stat-info">
+          <span>Pending</span>
+          <h3>0</h3>
+          <p>Refills</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="fas fa-history"></i></div>
+        <div class="stat-info">
+          <span>Past</span>
+          <h3>0</h3>
+          <p>Prescriptions</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="card-header">
+        <h3>Prescription History</h3>
+        <span class="badge-count">0</span>
+      </div>
+      <div class="empty-state">
+        <i class="fas fa-file-medical"></i>
+        <p>No prescriptions yet</p>
+        <p style="font-size:13px;color:var(--gray);margin-top:8px;">
+          Prescriptions will appear here after your doctor consultations.
+        </p>
+        <a href="/patient/book/" class="btn-primary" style="margin-top:16px;">
+          Book Appointment
+        </a>
+      </div>
+    </div>
+
+  </main>
+</div>
+{% endblock %}
