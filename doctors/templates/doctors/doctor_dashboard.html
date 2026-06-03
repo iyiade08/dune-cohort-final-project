@@ -54,6 +54,25 @@
       </div>
     </div>
 
+    <!-- VERIFICATION BANNER -->
+    {% if user.doctor_profile.is_verified %}
+      <div class="alert alert-success" style="margin-bottom:24px; display:flex; align-items:center; gap:12px;">
+        <i class="fas fa-circle-check" style="font-size:1.2rem;"></i>
+        <div>
+          <strong>Verified Doctor</strong>
+          <p style="margin:0; font-size:13px;">Your profile is verified. Patients can find and book appointments with you.</p>
+        </div>
+      </div>
+    {% else %}
+      <div class="alert alert-error" style="margin-bottom:24px; display:flex; align-items:center; gap:12px;">
+        <i class="fas fa-clock" style="font-size:1.2rem;"></i>
+        <div>
+          <strong>Verification Pending</strong>
+          <p style="margin:0; font-size:13px;">Your profile is under review. You'll be able to receive appointments once verified by an admin.</p>
+        </div>
+      </div>
+    {% endif %}
+
     <!-- STAT CARDS -->
     <div class="stat-grid">
       <div class="stat-card">

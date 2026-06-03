@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from .models import Appointment
 
 
@@ -27,6 +28,12 @@ class AppointmentForm(forms.ModelForm):
             'end_time':         'End Time',
             'notes':            'Notes (optional)',
         }
+
+    def clean_appointment_date(self):
+        date = self.cleaned_data.get('appointment_date')
+        if date and date < timezone.now().date():
+            raise forms.ValidationError('Appointment date cannot be in the past.')
+        return date
 
     def clean(self):
         cleaned_data = super().clean()

@@ -1,65 +1,47 @@
 {% extends 'base.html' %}
 {% block title %}Register — CareConnect{% endblock %}
-
 {% block content %}
 <section class="auth-section">
   <div class="auth-container">
-
     <div class="auth-left">
       <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&h=900&fit=crop" alt="Healthcare"/>
       <div class="auth-left-overlay">
-        
         <h2>Join thousands of patients already on CareConnect.</h2>
         <p>Book appointments, access records, and connect with doctors easily.</p>
       </div>
     </div>
-
     <div class="auth-right">
       <div class="auth-box">
         <div class="auth-header">
           <h1>Create account</h1>
           <p>Sign up to get started with CareConnect</p>
         </div>
-
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-          {% endfor %}
-        {% endif %}
-
+        {% if messages %}{% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}{% endif %}
+        {% if form.non_field_errors %}<div class="alert alert-error">{% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}</div>{% endif %}
         <form method="POST">
           {% csrf_token %}
-          {% if form.errors %}
-  <div class="alert alert-error">
-    {% for field in form %}
-      {% for error in field.errors %}
-        <p>{{ field.label }}: {{ error }}</p>
-      {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-      <p>{{ error }}</p>
-    {% endfor %}
-  </div>
-{% endif %}
           <div class="form-group">
             <label>Username</label>
             <div class="input-wrap">
               <i class="fas fa-user"></i>
-              <input type="text" name="username" placeholder="Choose a username" required/>
+              <input type="text" name="username" placeholder="Letters, numbers, hyphens only (no spaces)" value="{{ form.username.value|default:'' }}" required/>
             </div>
+            {% if form.username.errors %}<div class="alert alert-error" style="margin-top:6px;padding:8px 12px;">{% for error in form.username.errors %}<p style="margin:0;font-size:13px;">{{ error }}</p>{% endfor %}</div>{% endif %}
+            <small style="color:var(--gray);font-size:11px;margin-top:4px;display:block;">Use letters, numbers, hyphens or underscores. No spaces.</small>
           </div>
           <div class="form-group">
             <label>Email</label>
             <div class="input-wrap">
               <i class="fas fa-envelope"></i>
-              <input type="email" name="email" placeholder="Enter your email" required/>
+              <input type="email" name="email" placeholder="Enter your email" value="{{ form.email.value|default:'' }}" required/>
             </div>
+            {% if form.email.errors %}<div class="alert alert-error" style="margin-top:6px;padding:8px 12px;">{% for error in form.email.errors %}<p style="margin:0;font-size:13px;">{{ error }}</p>{% endfor %}</div>{% endif %}
           </div>
           <div class="form-group">
             <label>Phone</label>
             <div class="input-wrap">
               <i class="fas fa-phone"></i>
-              <input type="text" name="phone" placeholder="Enter your phone number"/>
+              <input type="text" name="phone" placeholder="Enter your phone number" value="{{ form.phone.value|default:'' }}"/>
             </div>
           </div>
           <div class="form-group">
@@ -78,6 +60,7 @@
               <i class="fas fa-lock"></i>
               <input type="password" name="password1" placeholder="Create a password" required/>
             </div>
+            {% if form.password1.errors %}<div class="alert alert-error" style="margin-top:6px;padding:8px 12px;">{% for error in form.password1.errors %}<p style="margin:0;font-size:13px;">{{ error }}</p>{% endfor %}</div>{% endif %}
           </div>
           <div class="form-group">
             <label>Confirm Password</label>
@@ -85,18 +68,13 @@
               <i class="fas fa-lock"></i>
               <input type="password" name="password2" placeholder="Confirm your password" required/>
             </div>
+            {% if form.password2.errors %}<div class="alert alert-error" style="margin-top:6px;padding:8px 12px;">{% for error in form.password2.errors %}<p style="margin:0;font-size:13px;">{{ error }}</p>{% endfor %}</div>{% endif %}
           </div>
-          <button type="submit" class="btn-primary btn-full">
-            Create Account <i class="fas fa-arrow-right"></i>
-          </button>
+          <button type="submit" class="btn-primary btn-full">Create Account <i class="fas fa-arrow-right"></i></button>
         </form>
-
-        <p class="auth-switch">
-          Already have an account? <a href="/accounts/login/">Log in</a>
-        </p>
+        <p class="auth-switch">Already have an account? <a href="/accounts/login/">Log in</a></p>
       </div>
     </div>
-
   </div>
 </section>
 {% endblock %}

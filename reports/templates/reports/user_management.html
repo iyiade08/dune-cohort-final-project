@@ -32,6 +32,16 @@
       </div>
     </div>
 
+    <!-- SUCCESS MESSAGE -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success" style="margin-bottom:24px; display:flex; align-items:center; gap:12px;">
+          <i class="fas fa-circle-check" style="font-size:1.2rem;"></i>
+          <div>{{ message }}</div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
     <!-- PATIENTS -->
     <div class="dashboard-card" style="margin-bottom:24px;">
       <div class="card-header">
@@ -82,6 +92,8 @@
             <span>Email</span>
             <span>Phone</span>
             <span>Status</span>
+            <span>Verification</span>
+            <span>Action</span>
           </div>
           {% for doctor in doctors %}
             <div class="table-row">
@@ -93,6 +105,33 @@
                   <span class="status-badge status-confirmed">Active</span>
                 {% else %}
                   <span class="status-badge status-cancelled">Inactive</span>
+                {% endif %}
+              </span>
+              <span>
+                {% if doctor.doctor_profile %}
+                  {% if doctor.doctor_profile.is_verified %}
+                    <span class="status-badge status-confirmed">Verified</span>
+                  {% else %}
+                    <span class="status-badge status-pending">Pending</span>
+                  {% endif %}
+                {% else %}
+                  <span class="status-badge status-cancelled">No Profile</span>
+                {% endif %}
+              </span>
+              <span>
+                {% if doctor.doctor_profile %}
+                  {% if not doctor.doctor_profile.is_verified %}
+                    <form method="POST" action="/admin-panel/users/verify/{{ doctor.doctor_profile.id }}/">
+                      {% csrf_token %}
+                      <button type="submit" class="btn-primary" style="padding:6px 14px; font-size:13px;">
+                        Verify
+                      </button>
+                    </form>
+                  {% else %}
+                    —
+                  {% endif %}
+                {% else %}
+                  —
                 {% endif %}
               </span>
             </div>

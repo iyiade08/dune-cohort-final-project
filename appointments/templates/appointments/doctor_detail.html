@@ -42,38 +42,106 @@
       </div>
       <div class="dashboard-card">
         <div class="card-header"><h3>Select Date & Time</h3></div>
-        {% if messages %}{% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}{% endif %}
+
+        <!-- MESSAGES -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" style="margin-bottom:16px;">
+              <i class="fas fa-exclamation-circle"></i> {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <!-- FORM ERRORS SUMMARY -->
+        {% if form.errors %}
+          <div class="alert alert-error" style="margin-bottom:16px;">
+            <i class="fas fa-exclamation-circle"></i>
+            <strong>Please fix the following errors:</strong>
+            <ul style="margin:8px 0 0 16px; padding:0;">
+              {% for field in form %}
+                {% for error in field.errors %}
+                  <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+              {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
         <form method="POST" action="/patient/book/{{ doctor.id }}/confirm/">
           {% csrf_token %}
+
+          <!-- DATE -->
           <div class="form-group">
             <label>Select Date</label>
-            <div class="input-wrap">
+            <div class="input-wrap {% if form.appointment_date.errors %}input-error{% endif %}">
               <i class="fas fa-calendar"></i>
-              <input type="date" name="date" required min="{{ today }}" />
+              <input
+                type="date"
+                name="appointment_date"
+                required
+                min="{{ today }}"
+                value="{{ form.appointment_date.value|default:'' }}"
+              />
             </div>
+            {% if form.appointment_date.errors %}
+              <span class="field-error">{{ form.appointment_date.errors.0 }}</span>
+            {% endif %}
           </div>
+
+          <!-- START TIME -->
           <div class="form-group">
             <label>Start Time</label>
-            <div class="input-wrap">
+            <div class="input-wrap {% if form.start_time.errors %}input-error{% endif %}">
               <i class="fas fa-clock"></i>
-              <input type="time" name="start_time" required />
+              <input
+                type="time"
+                name="start_time"
+                required
+                value="{{ form.start_time.value|default:'' }}"
+              />
             </div>
+            {% if form.start_time.errors %}
+              <span class="field-error">{{ form.start_time.errors.0 }}</span>
+            {% endif %}
           </div>
+
+          <!-- END TIME -->
           <div class="form-group">
             <label>End Time</label>
-            <div class="input-wrap">
+            <div class="input-wrap {% if form.end_time.errors %}input-error{% endif %}">
               <i class="fas fa-clock"></i>
-              <input type="time" name="end_time" required />
+              <input
+                type="time"
+                name="end_time"
+                required
+                value="{{ form.end_time.value|default:'' }}"
+              />
             </div>
+            {% if form.end_time.errors %}
+              <span class="field-error">{{ form.end_time.errors.0 }}</span>
+            {% endif %}
           </div>
+
+          <!-- NOTES -->
           <div class="form-group">
             <label>Notes (optional)</label>
             <div class="input-wrap">
               <i class="fas fa-sticky-note"></i>
-              <input type="text" name="notes" placeholder="Reason for visit..." />
+              <input
+                type="text"
+                name="notes"
+                placeholder="Reason for visit..."
+                value="{{ form.notes.value|default:'' }}"
+              />
             </div>
           </div>
-          <button type="submit" class="btn-primary btn-full">Confirm Booking <i class="fas fa-check"></i></button>
+
+          <button type="submit" class="btn-primary btn-full">
+            Confirm Booking <i class="fas fa-check"></i>
+          </button>
         </form>
       </div>
     </div>
