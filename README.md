@@ -1,6 +1,6 @@
 # CareConnect — Clinic & Appointment Booking System
 
-🌐 **Live Site:** https://careconnect-x4wt.onrender.com
+🌐 **Live Demo:** [https://careconnect-x4wt.onrender.com](https://careconnect-x4wt.onrender.com)
 
 A full-stack clinic and appointment booking web application built with Django and Django REST Framework. Patients can register, browse doctors, and book appointments. Doctors can manage their schedules and patients. Admins have full oversight with reports and user management.
 
@@ -9,11 +9,13 @@ A full-stack clinic and appointment booking web application built with Django an
 ## Features
 
 - Role-based authentication — Patient, Doctor, and Admin roles
-- Full appointment booking flow with confirmation and cancellation
+- Full appointment booking flow with confirmation, editing, and cancellation
+- Full CRUD on appointments — create, view, edit, and delete
 - Doctor availability management
 - Patient prescriptions and profile settings
 - Admin dashboard with clinic stats and daily reports
-- REST API with token authentication
+- REST API with token authentication (8 endpoints)
+- Flash messages on all key actions
 - Deployed on Render with Supabase PostgreSQL
 
 ---
@@ -23,10 +25,11 @@ A full-stack clinic and appointment booking web application built with Django an
 | Layer | Technology |
 |-------|-----------|
 | Backend | Python 3.14, Django 6.0 |
-| Database | SQLite (dev), Supabase PostgreSQL (production) |
+| Database | Supabase PostgreSQL (production & local) |
 | API | Django REST Framework |
-| Frontend | HTML, CSS (custom design system) |
-| Fonts & Icons | Poppins, Font Awesome 6.5 |
+| Authentication | Django Auth + DRF Token Authentication |
+| Frontend | HTML, CSS (custom design system, no Bootstrap) |
+| Fonts & Icons | Poppins (Google Fonts), Font Awesome 6.5 |
 | Deployment | Render, Whitenoise, Gunicorn |
 
 ---
@@ -58,7 +61,10 @@ python manage.py migrate
 # 6. Create superuser
 python manage.py createsuperuser
 
-# 7. Start the development server
+# 7. Collect static files
+python manage.py collectstatic --noinput
+
+# 8. Start the development server
 python manage.py runserver
 ```
 
@@ -100,7 +106,7 @@ careconnect/
 
 ## User Roles
 
-**Patient** — Register, browse doctors, book and cancel appointments, view prescriptions
+**Patient** — Register, browse doctors, book, edit, and delete appointments, view prescriptions
 
 **Doctor** — Manage schedule, set availability, view patient list, mark appointments complete
 
@@ -112,20 +118,44 @@ careconnect/
 
 Base URL: `https://careconnect-x4wt.onrender.com`
 
-All endpoints require token authentication. Include this header in every request:
+| Method | Endpoint | Auth Required | Description |
+|--------|----------|---------------|-------------|
+| GET | `/patient/api/doctors/` | No | List all verified doctors |
+| GET | `/patient/api/doctors/<id>/` | No | Get doctor details |
+| GET | `/patient/api/appointments/` | Yes | List patient appointments |
+| POST | `/patient/api/appointments/` | Yes | Create new appointment |
+| GET | `/patient/api/appointments/<id>/` | Yes | Get appointment detail |
+| PUT | `/patient/api/appointments/<id>/` | Yes | Cancel appointment |
+| DELETE | `/patient/api/appointments/<id>/` | Yes | Delete appointment |
+| GET | `/patient/api/notifications/` | Yes | List unread notifications |
+
+**Authentication:** Include this header in protected requests:
 ```
-Authorization: Token <your_token>
+Authorization: Token your_token_here
 ```
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/patient/api/doctors/` | List all doctors |
-| GET | `/patient/api/doctors/<id>/` | Doctor detail |
-| GET/POST | `/patient/api/appointments/` | List or create appointments |
-| GET/DELETE | `/patient/api/appointments/<id>/` | Appointment detail or cancel |
-| GET | `/patient/api/notifications/` | User notifications |
+**Example POST body for creating an appointment:**
+```json
+{
+  "doctor": 1,
+  "appointment_date": "2026-07-01",
+  "start_time": "10:00:00",
+  "end_time": "10:30:00",
+  "notes": "Routine checkup"
+}
+```
 
 See `postman_collection.json` for ready-to-use requests.
+
+---
+
+## Screenshots
+
+![Home Page](screenshots/home.png)
+![Patient Dashboard](screenshots/patient_dashboard.png)
+![Book Appointment](screenshots/book_appointment.png)
+![My Appointments](screenshots/my_appointments.png)
+![Admin Dashboard](screenshots/admin_dashboard.png)
 
 ---
 
@@ -148,6 +178,17 @@ gunicorn careconnect_config.wsgi:application
 - `DEBUG` = False
 - `ALLOWED_HOSTS` = careconnect-x4wt.onrender.com
 - `DATABASE_URL` = your Supabase connection string
+
+---
+
+## Future Improvements
+
+- Email notifications for appointment confirmations and reminders
+- Doctor photo upload via profile settings
+- Video consultation integration
+- Prescription management with PDF export
+- Patient medical history tracking
+- Mobile app using the existing REST API
 
 ---
 

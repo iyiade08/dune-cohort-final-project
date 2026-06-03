@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from appointments.models import Appointment
 
 
@@ -34,12 +35,35 @@ def doctor_availability(request):
             start_time=start_time,
             end_time=end_time,
         )
-        from django.contrib import messages
-        messages.success(request, 'Availability updated!')
+        messages.success(request, 'Availability added!')
         return redirect('/doctor/availability/')
     return render(request, 'doctors/doctor_availability.html', {
         'schedules': schedules
     })
+
+
+@login_required
+def edit_schedule(request, schedule_id):
+    from .models import Schedule
+    schedule = get_object_or_404(Schedule, id=schedule_id, doctor__user=request.user)
+    if request.method == 'POST':
+        schedule.day_of_week = request.POST.get('day_of_week')
+        schedule.start_time  = request.POST.get('start_time')
+        schedule.end_time    = request.POST.get('end_time')
+        schedule.save()
+        messages.success(request, 'Availability updated!')
+        return redirect('/doctor/availability/')
+    return render(request, 'doctors/edit_schedule.html', {'schedule': schedule})
+
+
+@login_required
+def delete_schedule(request, schedule_id):
+    from .models import Schedule
+    schedule = get_object_or_404(Schedule, id=schedule_id, doctor__user=request.user)
+    if request.method == 'POST':
+        schedule.delete()
+        messages.success(request, 'Availability deleted!')
+    return redirect('/doctor/availability/')
 
 
 @login_required
@@ -55,11 +79,8 @@ def doctor_patients(request):
 
 @login_required
 def complete_appointment(request, apt_id):
-    from appointments.models import Appointment
-    from django.shortcuts import get_object_or_404
     apt = get_object_or_404(Appointment, id=apt_id, doctor__user=request.user)
     apt.status = 'completed'
     apt.save()
-    from django.contrib import messages
     messages.success(request, 'Appointment marked as completed!')
     return redirect('/doctor/appointments/')

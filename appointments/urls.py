@@ -12,6 +12,8 @@ urlpatterns = [
     path('appointments/<int:appointment_id>/cancel/', views.cancel_appointment, name='cancel_appointment'),
     path('prescriptions/', views.prescriptions, name='prescriptions'),
     path('profile/', views.patient_profile, name='patient_profile'),
+    path('appointments/<int:appointment_id>/edit/',   views.edit_appointment,   name='edit_appointment'),
+path('appointments/<int:appointment_id>/delete/', views.delete_appointment, name='delete_appointment'),
 
     # REST API endpoints
     path('api/doctors/', api_views.doctor_list_api, name='api_doctor_list'),

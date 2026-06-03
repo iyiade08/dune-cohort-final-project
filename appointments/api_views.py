@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.db import IntegrityError
 from .models import Appointment, Notification
 from .serializers import AppointmentSerializer, NotificationSerializer
 from doctors.models import DoctorProfile
@@ -36,8 +37,14 @@ def appointment_list_api(request):
     elif request.method == 'POST':
         serializer = AppointmentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(patient=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            try:
+                serializer.save(patient=request.user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            except IntegrityError:
+                return Response(
+                    {'error': 'That time slot is already booked for this doctor. Please choose a different time.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

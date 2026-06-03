@@ -1,5 +1,6 @@
-{% extends 'base.html' %} {% block title %}Dr. {{ doctor.user.get_full_name }} —
-CareConnect{% endblock %} {% block content %}
+{% extends 'base.html' %}
+{% block title %}Dr. {{ doctor.user.get_full_name }} — CareConnect{% endblock %}
+{% block content %}
 <div class="dashboard-layout">
   <aside class="sidebar">
     <div class="sidebar-user">
@@ -11,68 +12,37 @@ CareConnect{% endblock %} {% block content %}
     </div>
     <nav class="sidebar-nav">
       <a href="/patient/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
-      <a href="/patient/appointments/"
-        ><i class="fas fa-calendar-check"></i> My Appointments</a
-      >
-      <a href="/patient/book/" class="active"
-        ><i class="fas fa-plus-circle"></i> Book Appointment</a
-      >
-      <a href="/accounts/logout/" class="logout"
-        ><i class="fas fa-sign-out-alt"></i> Log out</a
-      >
+      <a href="/patient/appointments/"><i class="fas fa-calendar-check"></i> My Appointments</a>
+      <a href="/patient/book/" class="active"><i class="fas fa-plus-circle"></i> Book Appointment</a>
+      <a href="/accounts/logout/" class="logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
     </nav>
   </aside>
-
   <main class="dashboard-main">
     <div class="dashboard-topbar">
       <div>
-        <h1>
-          Book with Dr. {{
-          doctor.user.get_full_name|default:doctor.user.username }}
-        </h1>
-        <p>
-          {{ doctor.get_speciality_display }} • {{ doctor.experience }} years
-          experience
-        </p>
+        <h1>Book with Dr. {{ doctor.user.get_full_name|default:doctor.user.username }}</h1>
+        <p>{{ doctor.get_speciality_display }} • {{ doctor.experience }} years experience</p>
       </div>
-      <a href="/patient/book/" class="btn-outline">
-        <i class="fas fa-arrow-left"></i> Back
-      </a>
+      <a href="/patient/book/" class="btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
     </div>
-
     <div class="dashboard-row">
-      <!-- DOCTOR PROFILE -->
       <div class="dashboard-card">
         <div class="doctor-profile-card">
           <div class="doctor-avatar-lg">
-            {% if doctor.photo %}
-            <img src="{{ doctor.photo.url }}" alt="Doctor" />
-            {% else %}
-            <i class="fas fa-user-md"></i>
-            {% endif %}
+            {% if doctor.photo %}<img src="{{ doctor.photo.url }}" alt="Doctor" />{% else %}<i class="fas fa-user-md"></i>{% endif %}
           </div>
-          <h3>
-            Dr. {{ doctor.user.get_full_name|default:doctor.user.username }}
-          </h3>
-          <span class="doctor-speciality"
-            >{{ doctor.get_speciality_display }}</span
-          >
+          <h3>Dr. {{ doctor.user.get_full_name|default:doctor.user.username }}</h3>
+          <span class="doctor-speciality">{{ doctor.get_speciality_display }}</span>
           <div class="doctor-stats">
             <div><strong>{{ doctor.rating }}</strong><span>Rating</span></div>
-            <div>
-              <strong>{{ doctor.experience }}</strong><span>Yrs Exp</span>
-            </div>
+            <div><strong>{{ doctor.experience }}</strong><span>Yrs Exp</span></div>
           </div>
           <p class="doctor-bio">{{ doctor.bio }}</p>
         </div>
       </div>
-
-      <!-- BOOKING FORM -->
       <div class="dashboard-card">
         <div class="card-header"><h3>Select Date & Time</h3></div>
-        {% if messages %} {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %} {% endif %}
+        {% if messages %}{% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}{% endif %}
         <form method="POST" action="/patient/book/{{ doctor.id }}/confirm/">
           {% csrf_token %}
           <div class="form-group">
@@ -100,16 +70,10 @@ CareConnect{% endblock %} {% block content %}
             <label>Notes (optional)</label>
             <div class="input-wrap">
               <i class="fas fa-sticky-note"></i>
-              <input
-                type="text"
-                name="notes"
-                placeholder="Reason for visit..."
-              />
+              <input type="text" name="notes" placeholder="Reason for visit..." />
             </div>
           </div>
-          <button type="submit" class="btn-primary btn-full">
-            Confirm Booking <i class="fas fa-check"></i>
-          </button>
+          <button type="submit" class="btn-primary btn-full">Confirm Booking <i class="fas fa-check"></i></button>
         </form>
       </div>
     </div>

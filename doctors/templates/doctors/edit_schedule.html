@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Edit Availability — CareConnect{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" style="background:#3B82F6;">
+        <i class="fas fa-user-md"></i>
+      </div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Doctor</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/doctor/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="/doctor/appointments/"><i class="fas fa-calendar-check"></i> Appointments</a>
+      <a href="/doctor/availability/" class="active"><i class="fas fa-clock"></i> Availability</a>
+      <a href="/doctor/patients/"><i class="fas fa-users"></i> My Patients</a>
+      <a href="/accounts/logout/" class="logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <div class="dashboard-topbar">
+      <div>
+        <h1>Edit Availability</h1>
+        <p>Update this time slot.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-row">
+      <div class="dashboard-card">
+        <div class="card-header"><h3>Edit Slot</h3></div>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label>Day of Week</label>
+            <div class="input-wrap">
+              <i class="fas fa-calendar"></i>
+              <select name="day_of_week">
+                <option value="0" {% if schedule.day_of_week == 0 %}selected{% endif %}>Monday</option>
+                <option value="1" {% if schedule.day_of_week == 1 %}selected{% endif %}>Tuesday</option>
+                <option value="2" {% if schedule.day_of_week == 2 %}selected{% endif %}>Wednesday</option>
+                <option value="3" {% if schedule.day_of_week == 3 %}selected{% endif %}>Thursday</option>
+                <option value="4" {% if schedule.day_of_week == 4 %}selected{% endif %}>Friday</option>
+                <option value="5" {% if schedule.day_of_week == 5 %}selected{% endif %}>Saturday</option>
+                <option value="6" {% if schedule.day_of_week == 6 %}selected{% endif %}>Sunday</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Start Time</label>
+            <div class="input-wrap">
+              <i class="fas fa-clock"></i>
+              <input type="time" name="start_time" value="{{ schedule.start_time }}" required/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>End Time</label>
+            <div class="input-wrap">
+              <i class="fas fa-clock"></i>
+              <input type="time" name="end_time" value="{{ schedule.end_time }}" required/>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px;">
+            <button type="submit" class="btn-primary btn-full">
+              Update <i class="fas fa-check"></i>
+            </button>
+            <a href="/doctor/availability/" class="btn-ghost btn-full" style="text-align:center;">
+              Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

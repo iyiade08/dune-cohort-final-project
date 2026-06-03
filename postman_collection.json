@@ -1,8 +1,6 @@
 {
   "info": {
     "name": "CareConnect API",
-    "_postman_id": "careconnect-api-collection",
-    "description": "REST API collection for CareConnect Clinic & Appointment Booking System",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -10,106 +8,70 @@
       "name": "List Doctors",
       "request": {
         "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Token 472da821ae787d2fd512fdb6529987d89fc4b370",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "https://careconnect-x4wt.onrender.com/patient/api/doctors/",
-          "protocol": "https",
-          "host": ["careconnect-x4wt", "onrender", "com"],
-          "path": ["patient", "api", "doctors", ""]
-        },
-        "description": "Returns a list of all verified doctors"
-      },
-      "response": []
+        "url": "http://127.0.0.1:8000/patient/api/doctors/"
+      }
     },
     {
       "name": "Doctor Detail",
       "request": {
         "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Token 472da821ae787d2fd512fdb6529987d89fc4b370",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "https://careconnect-x4wt.onrender.com/patient/api/doctors/1/",
-          "protocol": "https",
-          "host": ["careconnect-x4wt", "onrender", "com"],
-          "path": ["patient", "api", "doctors", "1", ""]
-        },
-        "description": "Returns details of a specific doctor by ID"
-      },
-      "response": []
+        "url": "http://127.0.0.1:8000/patient/api/doctors/1/"
+      }
     },
     {
       "name": "List Appointments",
       "request": {
         "method": "GET",
+        "header": [{"key": "Authorization", "value": "Token ae654fc7ccce7c604defd1eaf80165aa726d0dd4"}],
+        "url": "http://127.0.0.1:8000/patient/api/appointments/"
+      }
+    },
+    {
+      "name": "Create Appointment",
+      "request": {
+        "method": "POST",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Token 472da821ae787d2fd512fdb6529987d89fc4b370",
-            "type": "text"
-          }
+          {"key": "Authorization", "value": "Token ae654fc7ccce7c604defd1eaf80165aa726d0dd4"},
+          {"key": "Content-Type", "value": "application/json"}
         ],
-        "url": {
-          "raw": "https://careconnect-x4wt.onrender.com/patient/api/appointments/",
-          "protocol": "https",
-          "host": ["careconnect-x4wt", "onrender", "com"],
-          "path": ["patient", "api", "appointments", ""]
+        "body": {
+          "mode": "raw",
+          "raw": "{\"doctor\": 3, \"appointment_date\": \"2026-07-01\", \"start_time\": \"10:00:00\", \"end_time\": \"10:30:00\", \"notes\": \"Test appointment\"}"
         },
-        "description": "Returns a list of appointments for the authenticated user"
-      },
-      "response": []
+        "url": "http://127.0.0.1:8000/patient/api/appointments/"
+      }
     },
     {
       "name": "Appointment Detail",
       "request": {
         "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Token 472da821ae787d2fd512fdb6529987d89fc4b370",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "https://careconnect-x4wt.onrender.com/patient/api/appointments/1/",
-          "protocol": "https",
-          "host": ["careconnect-x4wt", "onrender", "com"],
-          "path": ["patient", "api", "appointments", "1", ""]
-        },
-        "description": "Returns, updates or cancels a specific appointment by ID"
-      },
-      "response": []
+        "header": [{"key": "Authorization", "value": "Token ae654fc7ccce7c604defd1eaf80165aa726d0dd4"}],
+        "url": "http://127.0.0.1:8000/patient/api/appointments/12/"
+      }
     },
     {
-      "name": "Notifications",
+      "name": "Cancel Appointment",
+      "request": {
+        "method": "PUT",
+        "header": [{"key": "Authorization", "value": "Token ae654fc7ccce7c604defd1eaf80165aa726d0dd4"}],
+        "url": "http://127.0.0.1:8000/patient/api/appointments/12/"
+      }
+    },
+    {
+      "name": "Delete Appointment",
+      "request": {
+        "method": "DELETE",
+        "header": [{"key": "Authorization", "value": "Token ae654fc7ccce7c604defd1eaf80165aa726d0dd4"}],
+        "url": "http://127.0.0.1:8000/patient/api/appointments/12/"
+      }
+    },
+    {
+      "name": "List Notifications",
       "request": {
         "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Token 472da821ae787d2fd512fdb6529987d89fc4b370",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "https://careconnect-x4wt.onrender.com/patient/api/notifications/",
-          "protocol": "https",
-          "host": ["careconnect-x4wt", "onrender", "com"],
-          "path": ["patient", "api", "notifications", ""]
-        },
-        "description": "Returns notifications for the authenticated user"
-      },
-      "response": []
+        "header": [{"key": "Authorization", "value": "Token ae654fc7ccce7c604defd1eaf80165aa726d0dd4"}],
+        "url": "http://127.0.0.1:8000/patient/api/notifications/"
+      }
     }
   ]
 }

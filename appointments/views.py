@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Appointment, Notification
 from doctors.models import DoctorProfile
+from .forms import AppointmentForm
 
 
 @login_required
@@ -122,3 +123,54 @@ def patient_profile(request):
         messages.success(request, 'Profile updated successfully!')
         return redirect('/patient/profile/')
     return render(request, 'appointments/patient_profile.html')
+
+
+@login_required
+def edit_appointment(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id, patient=request.user)
+
+    # Only allow editing pending appointments
+    if appointment.status != 'pending':
+        messages.error(request, 'Only pending appointments can be edited.')
+        return redirect('my_appointments')
+
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST, instance=appointment)
+        if form.is_valid():
+            # Check the new slot isn't already taken by another appointment
+            data = form.cleaned_data
+            conflict = Appointment.objects.filter(
+                doctor=appointment.doctor,
+                appointment_date=data['appointment_date'],
+                start_time=data['start_time']
+            ).exclude(id=appointment.id).exists()
+
+            if conflict:
+                messages.error(request, 'That slot is already booked. Please choose another time.')
+            else:
+                form.save()
+                messages.success(request, 'Appointment updated successfully!')
+                return redirect('my_appointments')
+    else:
+        form = AppointmentForm(instance=appointment)
+
+    return render(request, 'appointments/edit_appointment.html', {
+        'form': form,
+        'appointment': appointment,
+    })
+
+
+@login_required
+def delete_appointment(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id, patient=request.user)
+
+    if request.method == 'POST':
+        doctor_name = appointment.doctor.user.get_full_name() or appointment.doctor.user.username
+        appointment.delete()
+        messages.success(request, f'Appointment with Dr. {doctor_name} has been deleted.')
+        return redirect('my_appointments')
+
+    # GET request — show confirmation page
+    return render(request, 'appointments/delete_appointment.html', {
+        'appointment': appointment,
+    })

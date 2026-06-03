@@ -1,35 +1,135 @@
-{% block navbar %}
-<nav class="navbar" id="navbar">
-  <div class="nav-container">
-    <a href="/" class="nav-logo">
-      <i class="fas fa-heart-pulse"></i>
-      CareConnect
-    </a>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/about/">About</a></li>
-      <li><a href="/#features">Features</a></li>
-      <li><a href="/#pricing">Plans</a></li>
-      <li><a href="/contact/">Contact</a></li>
-    </ul>
-    <div class="nav-actions">
-      {% if request.user.is_authenticated %}
-        {% if request.user.role == 'patient' %}
-          <a href="/patient/dashboard/" class="btn-ghost">Dashboard</a>
-        {% elif request.user.role == 'doctor' %}
-          <a href="/doctor/dashboard/" class="btn-ghost">Dashboard</a>
-        {% elif request.user.role == 'admin' %}
-          <a href="/admin-panel/dashboard/" class="btn-ghost">Dashboard</a>
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}CareConnect{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  {% block navbar %}
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <i class="fas fa-heart-pulse"></i>
+        CareConnect
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#pricing">Plans</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        {% if request.user.is_authenticated %}
+          {% if request.user.role == 'patient' %}
+            <a href="/patient/dashboard/" class="btn-ghost">Dashboard</a>
+          {% elif request.user.role == 'doctor' %}
+            <a href="/doctor/dashboard/" class="btn-ghost">Dashboard</a>
+          {% elif request.user.role == 'admin' %}
+            <a href="/admin-panel/dashboard/" class="btn-ghost">Dashboard</a>
+          {% endif %}
+          <a href="/accounts/logout/" class="btn-primary">Log out</a>
+        {% else %}
+          <a href="/accounts/login/" class="btn-ghost">Log in</a>
+          <a href="/accounts/register/" class="btn-primary">Sign up</a>
         {% endif %}
-        <a href="/accounts/logout/" class="btn-primary">Log out</a>
-      {% else %}
-        <a href="/accounts/login/" class="btn-ghost">Log in</a>
-        <a href="/accounts/register/" class="btn-primary">Sign up</a>
-      {% endif %}
+      </div>
+      <button class="nav-toggle" id="navToggle">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
-    <button class="nav-toggle" id="navToggle">
-      <i class="fas fa-bars"></i>
-    </button>
-  </div>
-</nav>
-{% endblock %}
+  </nav>
+  {% endblock %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block footer %}
+  <footer class="footer">
+    <div class="footer-cta">
+      <div class="container">
+        <div class="footer-cta-inner">
+          <div class="footer-cta-icon">
+            <i class="fas fa-stethoscope"></i>
+          </div>
+          <div class="footer-cta-text">
+            <h2>Enough talk,<br/><span>Let's connect you up.</span></h2>
+            <p>Linking with a healthcare provider has never been easier.</p>
+          </div>
+          <a href="/accounts/register/" class="btn-white">Get Started <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="/" class="nav-logo">
+              <i class="fas fa-heart-pulse"></i> CareConnect
+            </a>
+            <p>A healthcare platform built for the modern world — connecting patients, doctors, and clinics through technology, care, and trust.</p>
+            <div class="footer-social">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/about/">About</a></li>
+              <li><a href="/#features">Features</a></li>
+              <li><a href="/#pricing">Plans</a></li>
+              <li><a href="/contact/">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Service Location</h4>
+            <ul>
+              <li><i class="fas fa-map-marker-alt"></i> 48 Allen Avenue</li>
+              <li>Ikeja, Lagos State</li>
+              <li><i class="fas fa-phone"></i> +234 9052139718</li>
+              <li><i class="fas fa-envelope"></i> hello@careconnect.co</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Newsletter</h4>
+            <p>Sign up to receive updates and health tips.</p>
+            <div class="newsletter-form">
+              <input type="email" placeholder="Email address"/>
+              <button><i class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; Copyright 2026 — CareConnect. All Rights Reserved.</p>
+          <div>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  {% endblock %}
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+    document.getElementById('navToggle').addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.toggle('open');
+      document.querySelector('.nav-actions').classList.toggle('open');
+    });
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

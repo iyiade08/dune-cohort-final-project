@@ -10,10 +10,13 @@ class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model  = Appointment
         fields = [
-            'id', 'patient_name', 'doctor_name', 'speciality',
+            'id', 'doctor', 'patient_name', 'doctor_name', 'speciality',
             'appointment_date', 'start_time', 'end_time',
             'status', 'notes', 'created_at'
         ]
+        extra_kwargs = {
+            'doctor': {'write_only': True},
+        }
 
 
 class NotificationSerializer(serializers.ModelSerializer):

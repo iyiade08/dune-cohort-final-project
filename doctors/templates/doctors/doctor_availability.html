@@ -94,7 +94,18 @@
                     <i class="fas fa-clock"></i> {{ schedule.start_time }} — {{ schedule.end_time }}
                   </div>
                 </div>
-                <span class="status-badge status-confirmed">Active</span>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <a href="/doctor/availability/{{ schedule.id }}/edit/" class="status-badge status-confirmed">
+                    <i class="fas fa-edit"></i> Edit
+                  </a>
+                  <form method="POST" action="/doctor/availability/{{ schedule.id }}/delete/" style="margin:0">
+                    {% csrf_token %}
+                    <button type="submit" class="status-badge status-cancelled" style="border:none; cursor:pointer;"
+                      onclick="return confirm('Delete this slot?')">
+                      <i class="fas fa-trash"></i> Delete
+                    </button>
+                  </form>
+                </div>
               </div>
             {% endfor %}
           </div>

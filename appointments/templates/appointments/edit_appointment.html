@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}Edit Appointment — CareConnect{% endblock %}
+{% block content %}
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar"><i class="fas fa-user"></i></div>
+      <div>
+        <h4>{{ user.get_full_name|default:user.username }}</h4>
+        <span>Patient</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/patient/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="/patient/appointments/" class="active"><i class="fas fa-calendar-check"></i> My Appointments</a>
+      <a href="/patient/book/"><i class="fas fa-plus-circle"></i> Book Appointment</a>
+      <a href="/accounts/logout/" class="logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
+    </nav>
+  </aside>
+  <main class="dashboard-main">
+    <div class="dashboard-topbar">
+      <div>
+        <h1>Edit Appointment</h1>
+        <p>Update your appointment with Dr. {{ appointment.doctor.user.get_full_name|default:appointment.doctor.user.username }}</p>
+      </div>
+      <a href="/patient/appointments/" class="btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+    {% if messages %}{% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}{% endif %}
+    <div class="dashboard-card" style="max-width:600px;">
+      <div class="card-header"><h3>Update Details</h3></div>
+      <form method="POST" style="padding:1.5rem;">
+        {% csrf_token %}
+        <div class="form-group">
+          <label>Appointment Date</label>
+          <div class="input-wrap">
+            <i class="fas fa-calendar"></i>
+            <input type="date" name="appointment_date" value="{{ appointment.appointment_date|date:'Y-m-d' }}" required />
+          </div>
+          {% if form.appointment_date.errors %}<span style="color:#e53e3e;font-size:0.8rem;">{{ form.appointment_date.errors.0 }}</span>{% endif %}
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group">
+            <label>Start Time</label>
+            <div class="input-wrap">
+              <i class="fas fa-clock"></i>
+              <input type="time" name="start_time" value="{{ appointment.start_time|time:'H:i' }}" required />
+            </div>
+            {% if form.start_time.errors %}<span style="color:#e53e3e;font-size:0.8rem;">{{ form.start_time.errors.0 }}</span>{% endif %}
+          </div>
+          <div class="form-group">
+            <label>End Time</label>
+            <div class="input-wrap">
+              <i class="fas fa-clock"></i>
+              <input type="time" name="end_time" value="{{ appointment.end_time|time:'H:i' }}" required />
+            </div>
+            {% if form.end_time.errors %}<span style="color:#e53e3e;font-size:0.8rem;">{{ form.end_time.errors.0 }}</span>{% endif %}
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Notes (optional)</label>
+          <div class="input-wrap" style="align-items:flex-start;">
+            <i class="fas fa-sticky-note" style="margin-top:4px;"></i>
+            <textarea name="notes" rows="4" placeholder="Reason for visit...">{{ appointment.notes }}</textarea>
+          </div>
+          {% if form.notes.errors %}<span style="color:#e53e3e;font-size:0.8rem;">{{ form.notes.errors.0 }}</span>{% endif %}
+        </div>
+        {% if form.non_field_errors %}<div class="alert alert-error"><i class="fas fa-triangle-exclamation"></i> {{ form.non_field_errors.0 }}</div>{% endif %}
+        <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+          <button type="submit" class="btn-primary" style="flex:1;"><i class="fas fa-floppy-disk"></i> Save Changes</button>
+          <a href="/patient/appointments/" class="btn-ghost" style="flex:1;text-align:center;padding:0.85rem;">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+{% endblock %}
